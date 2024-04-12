@@ -2,10 +2,9 @@ package com.matheusGabriel1234.Project.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.matheusGabriel1234.Project.entities.enums.OrderEnum;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,21 +27,16 @@ public class Order implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
-	
-	
-	
-	
-	public Instant getMoment() {
-		return moment;
-	}
-	public void setMoment(Instant moment) {
-		this.moment = moment;
-	}
-	
-	@JsonIgnore
+	private Integer orderstatus;
 	@ManyToOne
 	@JoinColumn(name ="client_id")
 	private Users client;
+	
+	
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -57,16 +51,37 @@ public class Order implements Serializable{
 		this.client = client;
 	}
 	
+
+	public Instant getMoment() {
+		return moment;
+	}
+	public void setMoment(Instant moment) {
+		this.moment = moment;
+	}
+	
+	
+	
+	
+	public OrderEnum getOrderstatus() {
+		return OrderEnum.valueOf(orderstatus);
+	}
+	public void setOrderstatus(OrderEnum orderstatus) {
+		if(orderstatus != null) {
+		this.orderstatus = orderstatus.getCode();
+		}
+	}
 	public Order() {
 		
 	}
 	
 	
 
-	public Order(Long id, Instant moment, Users client) {
+
+	public Order(Long id, Instant moment, OrderEnum orderstatus, Users client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderstatus(orderstatus);
 		this.client = client;
 	}
 	@Override
