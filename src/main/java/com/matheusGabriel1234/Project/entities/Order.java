@@ -6,8 +6,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheusGabriel1234.Project.entities.enums.OrderEnum;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -33,14 +36,16 @@ public class Order implements Serializable{
 	private Integer orderstatus;
 	@ManyToOne
 	@JoinColumn(name ="client_id")
+	@JsonIgnore
 	private Users client;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> item = new HashSet<OrderItem>();
 	
 	
-	
+	@OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
+	private Payment payment;
 	
 	
 	
@@ -76,18 +81,27 @@ public class Order implements Serializable{
 	public OrderEnum getOrderstatus() {
 		return OrderEnum.valueOf(orderstatus);
 	}
+	
 	public void setOrderstatus(OrderEnum orderstatus) {
 		if(orderstatus != null) {
 		this.orderstatus = orderstatus.getCode();
 		}
 	}
+	
+	
+	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	public Order() {
 		
 	}
 	
-	
-
-
 	public Order(Long id, Instant moment, OrderEnum orderstatus, Users client) {
 		super();
 		this.id = id;

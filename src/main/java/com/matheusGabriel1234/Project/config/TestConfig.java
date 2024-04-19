@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.matheusGabriel1234.Project.entities.Category;
 import com.matheusGabriel1234.Project.entities.Order;
 import com.matheusGabriel1234.Project.entities.OrderItem;
+import com.matheusGabriel1234.Project.entities.Payment;
 import com.matheusGabriel1234.Project.entities.Product;
 import com.matheusGabriel1234.Project.entities.Users;
 import com.matheusGabriel1234.Project.entities.enums.OrderEnum;
@@ -84,6 +85,13 @@ Users pedro = new Users(null,"Pedro Gabriel","pedro@111111.com","(11)11111-1111"
  OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
 
  orderItemrepo.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+ 
+ 
+ Payment paid = new Payment(null,Instant.parse("2019-06-20T19:53:07Z"),o1);
+ 
+ o1.setPayment(paid);
+ 
+ orderRepo.saveAll(Arrays.asList(o1));
 		
 	}
 	

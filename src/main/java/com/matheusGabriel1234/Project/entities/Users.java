@@ -31,7 +31,7 @@ public class Users implements Serializable{
 	private String telephone;
 	private String password;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
