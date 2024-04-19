@@ -36,10 +36,10 @@ public class Order implements Serializable{
 	private Integer orderstatus;
 	@ManyToOne
 	@JoinColumn(name ="client_id")
-	@JsonIgnore
+	
 	private Users client;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> item = new HashSet<OrderItem>();
 	
@@ -109,6 +109,17 @@ public class Order implements Serializable{
 		setOrderstatus(orderstatus);
 		this.client = client;
 	}
+	
+	public Double getTotal() {
+		Double soma = 0.0;
+		for(OrderItem x : item) {
+		 soma += x.getSubTotal();
+		 
+		}
+		return soma;
+		
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(client, id, moment);
@@ -125,6 +136,8 @@ public class Order implements Serializable{
 		return Objects.equals(client, other.client) && Objects.equals(id, other.id)
 				&& Objects.equals(moment, other.moment);
 	} 
+	
+	
 	
 	
 
