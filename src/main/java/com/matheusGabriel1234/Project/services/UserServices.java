@@ -29,4 +29,8 @@ public class UserServices {
 		
 	}
 	
+	public Users insert(Users obj) {
+		return repo.save(obj);
+	}
+	
 }
