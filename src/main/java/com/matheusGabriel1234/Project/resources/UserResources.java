@@ -17,6 +17,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheusGabriel1234.Project.entities.Users;
 import com.matheusGabriel1234.Project.services.UserServices;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping(value="/users")
@@ -50,7 +52,13 @@ public class UserResources {
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		 serv.delete(id);
 		return ResponseEntity.noContent().build();
-		
 	}
-	
-}
+	 
+
+	@RequestMapping(value = "/{id}",method=RequestMethod.PUT)
+	public ResponseEntity<Users> update(@PathVariable Long id,@RequestBody Users obj){
+		obj.setId(id);
+		obj = serv.update(obj);
+		return ResponseEntity.noContent().build();
+		}
+ }
