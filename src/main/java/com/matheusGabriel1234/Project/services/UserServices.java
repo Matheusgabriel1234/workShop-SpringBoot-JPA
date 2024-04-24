@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.matheusGabriel1234.Project.entities.Users;
 import com.matheusGabriel1234.Project.repository.UserRepository;
+import com.matheusGabriel1234.Project.services.exception.ObjectNotFound;
 
 @Service
 
@@ -24,7 +25,12 @@ public class UserServices {
 	
 	public Users findById(Long id) {
 		Optional<Users> obj = repo.findById(id);
-		return obj.get();
+		if(obj.isPresent()) {
+			return obj.get();
+		}else {
+			throw new ObjectNotFound("Objeto não encontrado");
+		}
+		
 		 
 		
 	}
